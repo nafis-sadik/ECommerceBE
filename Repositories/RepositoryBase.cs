@@ -18,7 +18,7 @@ namespace Repositories
 
         internal RepositoryBase()
         {
-            db = new BlueBirdDBContext();
+            db = new BlueBirdDBContext(new DbContextOptions<BlueBirdDBContext>());
             _dbSet = db.Set<T>();
             //transaction = db.Database.BeginTransaction();
         }

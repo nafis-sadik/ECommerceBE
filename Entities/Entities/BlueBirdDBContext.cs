@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Entities;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 #nullable disable
 
@@ -9,14 +11,6 @@ namespace DBAccess
 {
     public partial class BlueBirdDBContext : DbContext
     {
-        string ConnectionString = "";
-
-        public BlueBirdDBContext(string _connectionString = "server=localhost;User Id=root;Database=BlueBirdDB;Port=3306;")
-        {
-            ConnectionString = _connectionString;
-            base.Database.EnsureCreated();
-        }
-
         public BlueBirdDBContext(DbContextOptions<BlueBirdDBContext> options)
             : base(options)
         {
@@ -41,8 +35,16 @@ namespace DBAccess
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySQL(ConnectionString);
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                .AddJsonFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json")).Build();
+                optionsBuilder.UseMySQL(configuration.GetConnectionString("MySqlConnectionString"), mySqlOptions =>
+                {
+                    mySqlOptions.ServerVersion(new Version(5, 7, 17), ServerType.MySql)
+                    .EnableRetryOnFailure(
+                    maxRetryCount: 10,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null);
+                });
             }
         }
 

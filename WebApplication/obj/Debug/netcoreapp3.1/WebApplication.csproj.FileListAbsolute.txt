@@ -54,3 +54,10 @@ D:\Projects\Team Projects\ECommerceBE\WebApplication\bin\Debug\netcoreapp3.1\Sys
 D:\Projects\Team Projects\ECommerceBE\WebApplication\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
 D:\Projects\Team Projects\ECommerceBE\WebApplication\bin\Debug\netcoreapp3.1\System.Security.Cryptography.ProtectedData.dll
 D:\Projects\Team Projects\ECommerceBE\WebApplication\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+D:\Projects\Team Projects\ECommerceBE\WebApplication\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+D:\Projects\Team Projects\ECommerceBE\WebApplication\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.FileExtensions.dll
+D:\Projects\Team Projects\ECommerceBE\WebApplication\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Json.dll
+D:\Projects\Team Projects\ECommerceBE\WebApplication\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\Projects\Team Projects\ECommerceBE\WebApplication\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Physical.dll
+D:\Projects\Team Projects\ECommerceBE\WebApplication\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileSystemGlobbing.dll
+D:\Projects\Team Projects\ECommerceBE\WebApplication\bin\Debug\netcoreapp3.1\System.Text.Json.dll
