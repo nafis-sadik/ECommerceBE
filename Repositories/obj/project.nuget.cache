@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "version": 2,
   "dgSpecHash": "ij2AlS/n6+js2ObH6qUZBA4NKl29CY1yUKXCCijG6iP8oLAq6VWvtGJQPaRMyHUcq56PpBCt405KHr5HvKj8qA==",
@@ -50,4 +51,13 @@
     "C:\\Users\\nafis\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
   ],
   "logs": []
+=======
+{
+  "version": 2,
+  "dgSpecHash": "KNpZAEBYsNn4r1wl26JWSl9qLzubqGaqR/xVqVYWD3nvn2CKqFY34wV9ywH3wWSi3RUoZn8siLs1Ic4H7M0d4g==",
+  "success": true,
+  "projectFilePath": "E:\\Projects\\Nafis Sadik\\ECommerceBE\\Repositories\\Repositories.csproj",
+  "expectedPackageFiles": [],
+  "logs": []
+>>>>>>> 28c5b1e18e8ac781f65e71122b84d0924c92d344
 }

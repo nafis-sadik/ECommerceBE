@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "version": 2,
   "dgSpecHash": "rZeHExH+OsaoAxhmhJF4r5Zpvwbf6iHiaoYh4jmYB7wkjz/rnxVz8c73bwRzXeQdIPhS7Eujr7Mqw2FKlSmRXQ==",
@@ -5,4 +6,13 @@
   "projectFilePath": "D:\\Projects\\Team Projects\\ECommerceBE\\DataAccess\\DataAccess.csproj",
   "expectedPackageFiles": [],
   "logs": []
+=======
+{
+  "version": 2,
+  "dgSpecHash": "5cvi8bYUuw4PgvWQ4ierIEP036uer2wP/IOth0wXTnXKgw88LgZQc7K+rzvGQhx7K/qm7kxgyYeDLetc4hj8pw==",
+  "success": true,
+  "projectFilePath": "E:\\Projects\\Nafis Sadik\\ECommerceBE\\DataAccess\\DataAccess.csproj",
+  "expectedPackageFiles": [],
+  "logs": []
+>>>>>>> 28c5b1e18e8ac781f65e71122b84d0924c92d344
 }
