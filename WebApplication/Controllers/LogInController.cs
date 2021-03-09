@@ -19,10 +19,10 @@ namespace WebApplication.Controllers
             _logIn = logIn;
         }
 
-        public bool LogIn(string userId, string password)
+        public IActionResult LogIn(string userId, string password)
         {
             _logIn.UserLogIn(userId, password);
-            return true;
+            throw new NotImplementedException();
         }
     }
 }
