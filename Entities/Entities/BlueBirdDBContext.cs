@@ -37,14 +37,6 @@ namespace DBAccess
             {
                 IConfigurationRoot configuration = new ConfigurationBuilder()
                 .AddJsonFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json")).Build();
-                //optionsBuilder.UseMySQL(configuration.GetConnectionString("MySqlConnectionString"), mySqlOptions =>
-                //{
-                //    mySqlOptions.ServerVersion(new Version(5, 7, 17), ServerType.MySql)
-                //    .EnableRetryOnFailure(
-                //    maxRetryCount: 10,
-                //    maxRetryDelay: TimeSpan.FromSeconds(30),
-                //    errorNumbersToAdd: null);
-                //});
                 optionsBuilder.UseMySQL(configuration.GetConnectionString("MySqlConnectionString"));
             }
         }

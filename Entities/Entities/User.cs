@@ -17,6 +17,7 @@ namespace Entities
         public string PhoneNumber { get; set; }
         public decimal? UserTypeId { get; set; }
         public string ProfilePicLoc { get; set; }
+        public string Password { get; set; }
 
         public virtual CommonCode UserType { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
