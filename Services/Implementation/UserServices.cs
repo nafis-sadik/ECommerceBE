@@ -1,10 +1,12 @@
 ﻿using DevOne.Security.Cryptography.BCrypt;
 using Entities;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Repositories;
 using Services.Abstraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 //using System.Security.Cryptography;
 
 namespace Services.Implementation
@@ -29,6 +31,7 @@ namespace Services.Implementation
                     errMsg = "Password mismatched";
                 else
                     errMsg = "Success";
+                byte[] token = KeyDerivation.Pbkdf2(UserName, Encoding.Default.GetBytes(salt), KeyDerivationPrf.HMACSHA1, 1000, 256);
                 return passwordMatched;
             }
             else

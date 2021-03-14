@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="BCrypt" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.4" />
   </ItemGroup>
 
   <ItemGroup>
