@@ -1,11 +1,15 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Services.Abstraction;
 using Services.Implementation;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
@@ -24,7 +28,9 @@ namespace WebApplication.Controllers
         public IActionResult LogIn(string userId, string password)
         {
             if (_logIn.UserLogIn(userId, password, out string resMsg))
-                return Ok("JWT Token");
+            {
+                return Ok(resMsg);
+            }
             else
                 return Conflict(resMsg);
         }
@@ -32,16 +38,17 @@ namespace WebApplication.Controllers
         [Route("SignUp")]
         public IActionResult SignUp(string UserName, string PhoneNumber, int UserTypeId, string ProfilePicLoc, string Password)
         {
-            if (_logIn.UserRegister(new Entities.User {
+            if (_logIn.UserRegister(new User
+            {
                 UserName = UserName,
                 Password = Password,
                 PhoneNumber = PhoneNumber,
                 UserTypeId = UserTypeId,
                 ProfilePicLoc = ProfilePicLoc
-            }))
-                return Ok("JWT Token");
+            }, out string strResponse))
+                return Ok(strResponse);
             else
-                return Conflict("Operation Failed");
+                return Conflict(strResponse);
         }
     }
 }
