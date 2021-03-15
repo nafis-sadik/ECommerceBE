@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using Repositories;
 using Services.Abstraction;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -26,18 +25,18 @@ namespace Services.Implementation
 
         private string GenerateJwtToken(string userName)
         {
-            JwtSecurityTokenHandler JwtTokenHandler = new JwtSecurityTokenHandler();
+            // generate token that is valid for 7 days
+            var tokenHandler = new JwtSecurityTokenHandler();
             byte[] tokenKey = Encoding.ASCII.GetBytes(userName);
-            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+            var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[] {
-                        new Claim(ClaimTypes.Name, userName)
-                    }),
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
+                Subject = new ClaimsIdentity(new[] { new Claim("id", userName) }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),
+                SecurityAlgorithms.HmacSha256Signature)
             };
-            var securityToken = JwtTokenHandler.CreateToken(tokenDescriptor);
-            return JwtTokenHandler.WriteToken(securityToken);
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
 
         public bool UserLogIn(string UserName, string Password, out string strResponse)
