@@ -1,7 +1,5 @@
 ﻿using DevOne.Security.Cryptography.BCrypt;
 using Entities;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
 using Services.Abstraction;
@@ -10,15 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+using Entities.Models;
 //using System.Security.Cryptography;
 
 namespace Services.Implementation
@@ -27,23 +17,24 @@ namespace Services.Implementation
     {
         private readonly IUserRepo _userRepo;
         //private HashAlgorithm algorithm = new SHA256Managed();
-        private string salt = "Keno Megh Ashe, Hridoyo Akash, Tomaye Dekhite Dei Na";
         private const double saltExpire = 7;
         public UserServices()
         {
             _userRepo = new UserRepo();
         }
 
-        private string GenerateJwtToken(string userName)
+        private string GenerateJwtToken(User user)
         {
             //generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
-            byte[] tokenKey = Encoding.ASCII.GetBytes(salt);
+            byte[] tokenKey = Encoding.ASCII.GetBytes(CommonConstants.Salt);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] {
-                    new Claim("id", userName),
-                    new Claim("role", "Customer")
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Role, 
+                    new CommonCodeRepo().AsQueryable().FirstOrDefault(x => x.CommonCodeId == user.UserTypeId).NameEnglish),
+                    new Claim("id", user.UserId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(saltExpire),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),
@@ -63,7 +54,7 @@ namespace Services.Implementation
                 if (!passwordMatched)
                     strResponse = "Password mismatched";
                 else
-                    strResponse = GenerateJwtToken(UserName);
+                    strResponse = GenerateJwtToken(user);
                 return passwordMatched;
             }
             else
@@ -82,7 +73,7 @@ namespace Services.Implementation
                 newUser.UserId = maxUID + 1;
                 _userRepo.Add(newUser);
                 _userRepo.Save();
-                strResponse = GenerateJwtToken(newUser.UserName);
+                strResponse = GenerateJwtToken(newUser);
                 return true;
             }
             catch (Exception ex)
@@ -103,11 +94,11 @@ namespace Services.Implementation
                 User oldData = _userRepo.Get(x => x.UserId == userData.UserId);
                 oldData.UserName = userData.UserName;
                 oldData.UserType = userData.UserType;
-                oldData.Password = BCryptHelper.HashPassword(userData.Password, salt);
+                oldData.Password = BCryptHelper.HashPassword(userData.Password, CommonConstants.Salt);
                 oldData.ProfilePicLoc = userData.ProfilePicLoc;
                 oldData.UserTypeId = userData.UserTypeId;
                 _userRepo.Update(oldData);
-                strResponse = GenerateJwtToken(oldData.UserName);
+                strResponse = GenerateJwtToken(oldData);
                 return true;
             }
             catch (Exception ex)
