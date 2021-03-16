@@ -1,6 +1,7 @@
 ﻿using DevOne.Security.Cryptography.BCrypt;
 using Entities;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Repositories;
 using Services.Abstraction;
@@ -9,6 +10,15 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 //using System.Security.Cryptography;
 
 namespace Services.Implementation
@@ -17,7 +27,8 @@ namespace Services.Implementation
     {
         private readonly IUserRepo _userRepo;
         //private HashAlgorithm algorithm = new SHA256Managed();
-        private string salt = "Hakuna Matata";
+        private string salt = "Keno Megh Ashe, Hridoyo Akash, Tomaye Dekhite Dei Na";
+        private const double saltExpire = 7;
         public UserServices()
         {
             _userRepo = new UserRepo();
@@ -25,24 +36,27 @@ namespace Services.Implementation
 
         private string GenerateJwtToken(string userName)
         {
-            // generate token that is valid for 7 days
+            //generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
-            byte[] tokenKey = Encoding.ASCII.GetBytes(userName);
+            byte[] tokenKey = Encoding.ASCII.GetBytes(salt);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", userName) }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Subject = new ClaimsIdentity(new[] {
+                    new Claim("id", userName),
+                    new Claim("role", "Customer")
+                }),
+                Expires = DateTime.UtcNow.AddDays(saltExpire),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),
                 SecurityAlgorithms.HmacSha256Signature)
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
 
         public bool UserLogIn(string UserName, string Password, out string strResponse)
         {
             strResponse = "";
-            var user = _userRepo.AsQueryable().FirstOrDefault(x => x.UserName == UserName);
+            User user = _userRepo.AsQueryable().FirstOrDefault(x => x.UserName == UserName);
             if (user != null)
             {
                 bool passwordMatched = BCryptHelper.CheckPassword(Password, user.Password);
@@ -50,7 +64,6 @@ namespace Services.Implementation
                     strResponse = "Password mismatched";
                 else
                     strResponse = GenerateJwtToken(UserName);
-                byte[] token = KeyDerivation.Pbkdf2(UserName, Encoding.Default.GetBytes(salt), KeyDerivationPrf.HMACSHA1, 1000, 256);
                 return passwordMatched;
             }
             else
@@ -62,7 +75,8 @@ namespace Services.Implementation
 
         public bool UserRegister(User newUser, out string strResponse)
         {
-            try{
+            try
+            {
                 newUser.Password = BCryptHelper.HashPassword(newUser.Password, BCryptHelper.GenerateSalt(12));
                 int maxUID = (int)_userRepo.AsQueryable().Max(x => x.UserId);
                 newUser.UserId = maxUID + 1;
@@ -70,7 +84,9 @@ namespace Services.Implementation
                 _userRepo.Save();
                 strResponse = GenerateJwtToken(newUser.UserName);
                 return true;
-            }catch(Exception ex){
+            }
+            catch (Exception ex)
+            {
                 if (ex.InnerException == null)
                     strResponse = ex.Message;
                 else
