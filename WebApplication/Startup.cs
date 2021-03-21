@@ -42,8 +42,7 @@ namespace WebApplication
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(CommonConstants.Salt)),
                     ValidateIssuer = false,
-                    ValidateAudience = false,
-
+                    ValidateAudience = false
                 };
             });
         }

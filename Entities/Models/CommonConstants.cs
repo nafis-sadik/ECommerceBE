@@ -12,5 +12,10 @@ namespace Entities.Models
             } 
             private set { }
         }
+        public static int StandardPageSize
+        {
+            get { return 20; }
+            private set { }
+        }
     }
 }

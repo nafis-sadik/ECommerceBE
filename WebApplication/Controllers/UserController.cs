@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Services.Abstraction;
@@ -25,6 +26,7 @@ namespace WebApplication.Controllers
         }
         [HttpPost]
         [Route("LogIn/{userId}/{password}")]
+        [AllowAnonymous]
         public IActionResult LogIn(string userId, string password)
         {
             if (_logIn.UserLogIn(userId, password, out string resMsg))
@@ -36,6 +38,7 @@ namespace WebApplication.Controllers
         }
         [HttpPost]
         [Route("SignUp")]
+        [AllowAnonymous]
         public IActionResult SignUp(string UserName, string PhoneNumber, int UserTypeId, string ProfilePicLoc, string Password)
         {
             if (_logIn.UserRegister(new User
