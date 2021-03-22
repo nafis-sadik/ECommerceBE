@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 22, 2021 at 12:40 PM
+-- Generation Time: Mar 22, 2021 at 01:11 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -115,6 +115,13 @@ CREATE TABLE `productimgs` (
   `PK` decimal(18,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `productimgs`
+--
+
+INSERT INTO `productimgs` (`ProductImgLocation`, `PK`) VALUES
+('C:\\Users\\User\\Pictures\\Md.Nafis Sadik 1.jpg', '1');
+
 -- --------------------------------------------------------
 
 --
@@ -176,6 +183,13 @@ CREATE TABLE `shopproducts` (
   `ShopID` decimal(18,0) DEFAULT NULL,
   `VendorId` decimal(18,0) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `shopproducts`
+--
+
+INSERT INTO `shopproducts` (`PK`, `ProductId`, `SubCategoryId`, `ProductPrice`, `ProductDescription`, `Stock`, `ShopID`, `VendorId`) VALUES
+('1', '1', '4', '680', 'Muah 😘', '500', '1', NULL);
 
 -- --------------------------------------------------------
 
