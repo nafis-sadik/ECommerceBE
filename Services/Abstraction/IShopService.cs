@@ -9,6 +9,6 @@ namespace Services.Abstraction
     public interface IShopService
     {
         List<Category> GetCategoriesByShop(int shopId);
-        List<Product_ProductListPage> GetProducts(int shopId, int pageNo);
+        Page_ProductListPage GetProducts(Page_ProductListPage PageDetails);
     }
 }

@@ -8,7 +8,7 @@ namespace MySql_Code_First
         {
             try
             {
-                new DBAccess.BlueBirdDBContext("server=localhost;User Id=root;Database=BLueBirdDB;Port=3306;").Database.EnsureCreated();
+                new DBAccess.BlueBirdDBContext("server=localhost;User Id=root;Database=BlueBirdDB;Port=3306;").Database.EnsureCreated();
                 Console.WriteLine("Success");
             }
             catch (Exception ex)

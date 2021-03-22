@@ -53,9 +53,9 @@ namespace DBAccess
             {
                 entity.Property(e => e.CategoryId).HasColumnType("numeric(18, 0)");
 
-                entity.Property(e => e.CategoryName).HasMaxLength(10);
+                entity.Property(e => e.CategoryName).HasMaxLength(50);
 
-                entity.Property(e => e.CategoryNameBangla).HasColumnType("numeric(18, 0)");
+                entity.Property(e => e.CategoryNameBangla).HasMaxLength(50);
 
                 entity.Property(e => e.ShopId)
                     .HasColumnType("numeric(18, 0)")

@@ -14,7 +14,7 @@ namespace Entities
 
         public decimal CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public decimal? CategoryNameBangla { get; set; }
+        public string CategoryNameBangla { get; set; }
         public decimal? ShopId { get; set; }
 
         public virtual Shop Shop { get; set; }

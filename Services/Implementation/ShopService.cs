@@ -29,11 +29,18 @@ namespace Services.Implementation
             return categories;
         }
 
-        public List<Product_ProductListPage> GetProducts(int shopId, int pageNo)
+        public Page_ProductListPage GetProducts(Page_ProductListPage PageDetails)
         {
-            List<Product_ProductListPage> productsRequested = _shopProductsRepo.AsQueryable().Where(x => x.ShopId == shopId).
+            string searchString = "";
+            if (!string.IsNullOrEmpty(PageDetails.SearchString))
+                searchString = PageDetails.SearchString.ToLower();
+            List<Product_ProductListPage> productsRequested = _shopProductsRepo.AsQueryable().
+                Where(x => x.ShopId == PageDetails.ShopId 
+                && x.Product.ProductName.ToLower().Contains(searchString)
+                && x.ProductPrice >= PageDetails.PriceRange_LowerBound
+                && x.ProductPrice <= PageDetails.PriceRange_UpperBound).
                 OrderBy(x => x.Product.ProductName).
-                Skip(CommonConstants.StandardPageSize * (pageNo-1)).
+                Skip(CommonConstants.StandardPageSize * (PageDetails.PageNo - 1)).
                 Take(CommonConstants.StandardPageSize).
                 Select(x => new Product_ProductListPage {
                     Pk = (int)x.Pk,
@@ -42,7 +49,9 @@ namespace Services.Implementation
                 }).ToList();
             foreach (Product_ProductListPage product in productsRequested)
                 product.ImageUrl = _productsImgRepo.AsQueryable().FirstOrDefault(i => i.Pk == product.Pk).ProductImgLocation;
-            return productsRequested;
+            
+            PageDetails.Products = productsRequested;
+            return PageDetails;
         }
     }
 }

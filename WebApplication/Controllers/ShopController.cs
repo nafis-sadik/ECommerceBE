@@ -8,6 +8,7 @@ using Services.Implementation;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authorization;
+using Entities.Models;
 
 namespace WebApplication.Controllers
 {
@@ -23,11 +24,17 @@ namespace WebApplication.Controllers
         [Route("ProductCategories/{shopId}")]
         [AllowAnonymous]
         public IActionResult GetCategories(int shopId) => new JsonResult(shopService.GetCategoriesByShop(shopId));
-        [Route("GetProducts/{shopId}/{pageNo}")]
+        [Route("GetProducts")]
         [AllowAnonymous]
-        public IActionResult GetProducts(int shopId, int pageNo)
+        public IActionResult GetProducts(int shopId, int pageNo, int minPrice, int maxPrice, string? searchString)
         {
-            return new JsonResult(shopService.GetProducts(shopId, pageNo));
+            return new JsonResult(shopService.GetProducts(new Page_ProductListPage {
+                PageNo = pageNo,
+                ShopId = shopId,
+                PriceRange_LowerBound = minPrice,
+                PriceRange_UpperBound = maxPrice,
+                SearchString = searchString
+            }));
         }
     }
 }
