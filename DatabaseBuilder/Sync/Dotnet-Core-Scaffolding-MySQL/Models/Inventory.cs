@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Entities
+namespace Dotnet_Core_Scaffolding_MySQL.Models
 {
-    public partial class Productimg
+    public partial class Inventory
     {
-        public string ProductImgLocation { get; set; }
+        public decimal? Quantity { get; set; }
         public decimal? Pk { get; set; }
 
         public virtual Shopproduct PkNavigation { get; set; }

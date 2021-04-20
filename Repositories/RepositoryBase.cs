@@ -1,4 +1,4 @@
-﻿using DBAccess;
+﻿using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -11,14 +11,14 @@ namespace Repositories
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        private BlueBirdDBContext db;
+        private BLueBirdDBContext db;
         private DbSet<T> _dbSet;
 
         //private readonly IDbContextTransaction transaction;
 
         internal RepositoryBase()
         {
-            db = new BlueBirdDBContext(new DbContextOptions<BlueBirdDBContext>());
+            db = new BLueBirdDBContext(new DbContextOptions<BLueBirdDBContext>());
             _dbSet = db.Set<T>();
             //transaction = db.Database.BeginTransaction();
         }

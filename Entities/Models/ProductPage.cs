@@ -7,6 +7,6 @@ namespace Models
 {
     class ProductPage
     {
-        public ShopProduct Product { get; set; }
+        public Shopproduct Product { get; set; }
     }
 }

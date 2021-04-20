@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace Entities
+namespace Dotnet_Core_Scaffolding_MySQL.Models
 {
     public partial class BLueBirdDBContext : DbContext
     {
@@ -183,11 +183,11 @@ namespace Entities
                     .HasColumnName("ProductID");
 
                 entity.Property(e => e.ProductAttribute)
-                    .HasMaxLength(50)
+                    .HasColumnType("longtext")
                     .HasDefaultValueSql("'NULL'");
 
                 entity.Property(e => e.ProductName)
-                    .HasMaxLength(10)
+                    .HasMaxLength(100)
                     .HasDefaultValueSql("'NULL'")
                     .IsFixedLength(true);
             });

@@ -19,5 +19,9 @@ namespace WebApplication.Controllers
         }
         [Route("api/Categories/{shopId}")]
         public IActionResult GetCategories(int shopId) => new JsonResult(shopService.GetCategoriesByShop(shopId));
+        [Route("api/CategoryWiseProducts/{shopId}/{CategoryId}")]
+        public IActionResult CategoryWiseProducts(int shopId, int CategoryId) => new JsonResult(shopService.GetCategoriesByShop(shopId));
+        [Route("api/SubCategoryWiseProducts/{shopId}/{SubCategoryId}")]
+        public IActionResult SubCategoryWiseProducts(int shopId, int SubCategoryId) => new JsonResult(shopService.GetCategoriesByShop(shopId));
     }
 }

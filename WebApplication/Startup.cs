@@ -37,20 +37,26 @@ namespace WebApplication
             }).AddJwtBearer(x => {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
-                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(CommonConstants.Salt)),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-
                 };
             });
+
+            // Development
+            services.AddCors(o => o.AddPolicy("Allow Web Clients", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+            // Production
+            //services.AddCors(origin => origin.AddPolicy("Allow Web Clients", builder => builder.WithOrigins("http://127.0.0.1:5501/")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("Allow Web Clients");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

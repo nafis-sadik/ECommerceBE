@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Entities
+namespace Dotnet_Core_Scaffolding_MySQL.Models
 {
     public partial class Inventorylog
     {

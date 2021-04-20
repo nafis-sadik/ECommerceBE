@@ -10,6 +10,6 @@ namespace Entities
         public decimal? Quantity { get; set; }
         public decimal? Pk { get; set; }
 
-        public virtual ShopProduct PkNavigation { get; set; }
+        public virtual Shopproduct PkNavigation { get; set; }
     }
 }

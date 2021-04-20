@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace Entities
+namespace Dotnet_Core_Scaffolding_MySQL.Models
 {
-    public partial class Productreturn
+    public partial class Productsinorder
     {
-        public decimal ProductReturnId { get; set; }
-        public decimal OrderId { get; set; }
         public decimal Pk { get; set; }
-        public decimal? ReturnQuantity { get; set; }
+        public decimal OrderId { get; set; }
+        public decimal? Quantity { get; set; }
 
         public virtual Order Order { get; set; }
         public virtual Shopproduct PkNavigation { get; set; }
